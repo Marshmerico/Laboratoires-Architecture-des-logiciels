@@ -1,93 +1,99 @@
 import java.util.*;
 
+
 public class Ticket
 {
 
-    int ticketID;
+int ticketID;
 
-    String title;
-    String description;
-    String status;
-    String priority;
+String title;
+String description;
+String status;
+String priority;
 
-    Date creationDate;
-    Date updateDate;
+Date creationDate;
+Date updateDate;
 
-    public Ticket(int ticketID , String title, String description, String status, String priority, Date creationDate, Date updateDate)
+private Admin admin;
+
+
+
+
+public Ticket(int ticketID , String title, String description, String status, String priority, Date creationDate, Date updateDate)
+{
+creationDate = new Date();
+}
+
+
+void assignTo(Admin admin)
+{
+    if (status.compareTo("OUVERT")==0)
     {
-        creationDate = new Date();
+        admin = this.admin;
     }
-
-
-    void assignTo(Admin admin)
+    else
     {
-        if (status.compareTo("OUVERT")==0)
-        {
-            this.admin = admin;
-        }
-        else
-        {
-            System.out.println("Le ticket doit être ouvert pour être assigné");
-        }
-
+    System.out.println("Le ticket doit être ouvert pour être assigné");
     }
 
-    void updateStatus(String status)
-    {
-        this.status = status;
-    }
+}
 
-    void addComment(String comment)
-    {
-        this.description = description + " Commentaire : " + comment;
-        updateTicket(this)
-    }
+void updateStatus(String status)
+{
+    this.status = status;
+}
 
-    @Override
-    public String toString()
-    {
-        return "ID : " + ticketID  + "\n" + " Titre :" + title + "\n" + " Description : " + description  + "\n" + " Statut " + status + "\n" + " Priorité : " + priority  + "\n" + " Date de création : " + creationDate + "\n" + " Dernière mise a jour : " + updateDate;
-    }
-    public int getTicketID() {
-        return ticketID;
-    }
-    public void setTicketID(int ticketID) {
-        this.ticketID = ticketID;
-    }
-    public String getTitle() {
-        return title;
-    }
-    public void setTitle(String title) {
-        this.title = title;
-    }
-    public String getDescription() {
-        return description;
-    }
-    public void setDescription(String description) {
-        this.description = description;
-    }
-    public String getStatus() {
-        return status;
-    }
-    public void setStatus(String status) {
-        this.status = status;
-    }
-    public String getPriority() {
-        return priority;
-    }
-    public void setPriority(String priority) {
-        this.priority = priority;
-    }
-    public Date getCreationDate() {
-        return creationDate;
-    }
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
-    }
-    public Date getUpdateDate() {
-        return updateDate;
-    }
-    public void setUpdateDate(Date updateDate) {
-        this.updateDate = updateDate;
-    }
+void addComment(String comment, User user)
+{
+    this.description = description + " Commentaire : " + comment;
+    User.updateTicket(this);
+}
+
+@Override
+public String toString()
+{
+return "ID : " + ticketID  + "\n" + " Titre :" + title + "\n" + " Description : " + description  + "\n" + " Statut " + status + "\n" + " Priorité : " + priority  + "\n" + " Date de création : " + creationDate + "\n" + " Dernière mise a jour : " + updateDate;   
+}
+public int getTicketID() {
+    return ticketID;
+}
+public void setTicketID(int ticketID) {
+    this.ticketID = ticketID;
+}
+public String getTitle() {
+    return title;
+}
+public void setTitle(String title) {
+    this.title = title;
+}
+public String getDescription() {
+    return description;
+}
+public void setDescription(String description) {
+    this.description = description;
+}
+public String getStatus() {
+    return status;
+}
+public void setStatus(String status) {
+    this.status = status;
+}
+public String getPriority() {
+    return priority;
+}
+public void setPriority(String priority) {
+    this.priority = priority;
+}
+public Date getCreationDate() {
+    return creationDate;
+}
+public void setCreationDate(Date creationDate) {
+    this.creationDate = creationDate;
+}
+public Date getUpdateDate() {
+    return updateDate;
+}
+public void setUpdateDate(Date updateDate) {
+    this.updateDate = updateDate;
+}
 }

@@ -4,8 +4,8 @@ public class Admin{
     private int adminID;
     private String name;
     private String email;
-    private List<int> tickets;
-
+    //private List<Ticket> tickets = new ArrayList<>();
+    
     public Admin(int adminID, String name, String email){
         this.adminID = adminID;
         this.name = name;
@@ -22,14 +22,14 @@ public class Admin{
 
     //public List<Ticket> viewAllTickets(){
     public void viewAllTickets(){
-        System.out.prinln("Visualisation de tous les tickets");
-        for (int ticket: tickets) {
-            System.out.println(ticketsComplets[ticket].toString());
+        System.out.println("Visualisation de tous les tickets");
+        for (Ticket ticket: Main.tickets) {
+            System.out.println(ticket.toString());
         }
     }
 
     public void addTicket(Ticket ticket) {
-        this.tickets.add(ticket.getTicketID());
+        Main.tickets.add(ticket);
     }
 
 

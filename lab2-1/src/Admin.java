@@ -1,37 +1,36 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Admin{
+public class Admin {
     private int adminID;
     private String name;
     private String email;
-    //private List<Ticket> tickets = new ArrayList<>();
-    
-    public Admin(int adminID, String name, String email){
+    private List<Integer> ticketsID;
+
+    public Admin(int adminID, String name, String email) {
         this.adminID = adminID;
         this.name = name;
         this.email = email;
+        this.ticketsID = new ArrayList<Integer>();
     }
 
-    public void assignTicket(Ticket ticket, Admin admin){
-        ticket.assignTo(admin);
+    public void assignTicket(Ticket ticket, Admin admin) {
+        ticket.assignTo(admin.getAdminID());
+        admin.addTicketID(ticket.getTicketID());
+
     }
 
-    public void closeTicket(Ticket ticket){
+    public void closeTicket(Ticket ticket) {
         ticket.updateStatus("TERMINE");
     }
 
-    //public List<Ticket> viewAllTickets(){
-    public void viewAllTickets(){
-        System.out.println("Visualisation de tous les tickets");
-        for (Ticket ticket: Main.tickets) {
-            System.out.println(ticket.toString());
-        }
+    public int getAdminID() { return adminID; }
+    public String getName() { return name; }
+    public String getEmail() { return email; }
+
+    public List<Integer> getTicketsID() {
+        return ticketsID;
     }
 
-    public void addTicket(Ticket ticket) {
-        Main.tickets.add(ticket);
-    }
-
-
-
+    public void addTicketID(int id){ticketsID.add(id);}
 }

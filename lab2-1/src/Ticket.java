@@ -1,4 +1,5 @@
 import java.util.*;
+import java.io.File;
 
 
 public class Ticket
@@ -8,6 +9,7 @@ int ticketID;
 
 String title;
 String description;
+File mediaFile;
 String status;
 String priority;
 
@@ -45,8 +47,11 @@ void updateStatus(String status)
 
 void addComment(String comment, User user)
 {
-    this.description = description + " Commentaire : " + comment;
-    User.updateTicket(this);
+     void addComment(String comment, File mediaFile)
+    
+    this.description = " Commentaire : " + comment;
+    this.mediaFile = mediaFile;
+    updateTicket(this)
 }
 
 @Override

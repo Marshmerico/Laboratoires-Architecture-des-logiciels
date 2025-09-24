@@ -45,9 +45,9 @@ void updateStatus(String status)
     this.status = status;
 }
 
-void addComment(String comment, User user)
+void addComment(String comment, User user, File mediaFile)
 {
-     void addComment(String comment, File mediaFile)
+     void addComment(String comment,File mediaFile)
     
     this.description = " Commentaire : " + comment;
     this.mediaFile = mediaFile;

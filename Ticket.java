@@ -1,4 +1,6 @@
 import java.util.*;
+import java.io.File;
+import java.util.Scanner;
 
 public class Ticket
 {
@@ -41,8 +43,19 @@ public class Ticket
     {
         this.description = description + " Commentaire : " + comment;
         updateTicket(this)
+            System.out.print("Entrez le chemin d'une image ou d'une vidéo : ");
+        String filePath = scanner.nextLine();
+        File mediaFile = new File(filePath);
+
+        if (!mediaFile.exists()) {
+            System.out.println("⚠️ Le fichier n'existe pas !");
+            return;
     }
 
+    void addPhoViComment()
+
+
+    
     @Override
     public String toString()
     {

@@ -17,7 +17,7 @@ public class Admin{
     }
 
     public void closeTicket(Ticket ticket){
-        ticket.updateStatus("TERMINE")
+        ticket.updateStatus("TERMINE");
     }
 
     //public List<Ticket> viewAllTickets(){

@@ -112,9 +112,6 @@ public class Main {
                     System.out.print("ID du ticket : ");
                     int id = scanner.nextInt();
                     scanner.nextLine();
-                    //Optional<Ticket> ticket = tickets.stream()
-                      //      .filter(t -> t.getTicketID() == id)
-                        //    .findFirst();
                     Optional<Ticket> ticket = findTicket(id);
                     if (ticket.isPresent() && user.getTicketsID().contains(id)) {
                         System.out.print("Commentaire : ");
@@ -153,9 +150,6 @@ public class Main {
                     System.out.print("ID du ticket à assigner : ");
                     int id = scanner.nextInt();
                     scanner.nextLine();
-                    //Optional<Ticket> ticket = tickets.stream()
-                      //      .filter(t -> t.getTicketID() == id)
-                        //    .findFirst();
                     Optional<Ticket> ticket = findTicket(id);
                     if (ticket.isPresent()) {
                         System.out.print("ID de l'Admin assigné : ");
@@ -178,9 +172,7 @@ public class Main {
                     System.out.print("ID du ticket à mettre à jour : ");
                     int id = scanner.nextInt();
                     scanner.nextLine();
-                    //Optional<Ticket> ticket = tickets.stream()
-                      //      .filter(t -> t.getTicketID() == id)
-                        //    .findFirst();
+
                     Optional<Ticket> ticket = findTicket(id);
                     if (ticket.isPresent()) {
                         System.out.print("Nouveau statut (OUVERT/ASSIGNE/VALIDATION/TERMINE): ");

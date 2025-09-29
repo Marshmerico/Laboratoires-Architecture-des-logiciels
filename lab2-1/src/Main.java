@@ -98,7 +98,6 @@ public class Main {
                     Ticket t = new Ticket(ticketCounter++, titre, desc, "OUVERT", "Moyenne", user.getUserID());
                     user.addTicketID(t.getTicketID()); // on lie par ID
                     user.createTicket(t);
-                    //tickets.add(t);
                     System.out.println("Ticket créé avec ID " + t.getTicketID());
                 }
                 case 2 -> {
@@ -157,8 +156,7 @@ public class Main {
                         scanner.nextLine();
                         Optional<Admin> adminATrouver = findAdmin(idAdmin);
                         if(adminATrouver.isPresent()) {
-                            admin.assignTicket(ticket.get(), admins.get(idAdmin - 1)); // on marque comme assigné
-                            //admin.addTicketID(id); // admin stocke juste l’ID
+                            admin.assignTicket(ticket.get(), admins.get(idAdmin - 1)); // on marque comme assigne
                             System.out.println("Ticket " + id + " assigné à " + idAdmin);
                         }
                         else{
@@ -186,9 +184,6 @@ public class Main {
                     System.out.print("ID du ticket à fermer : ");
                     int id = scanner.nextInt();
                     scanner.nextLine();
-                    //Optional<Ticket> ticket = tickets.stream()
-                      //      .filter(t -> t.getTicketID() == id)
-                        //    .findFirst();
                     Optional<Ticket> ticket = findTicket(id);
                     if (ticket.isPresent()) {
                         admin.closeTicket(ticket.get());

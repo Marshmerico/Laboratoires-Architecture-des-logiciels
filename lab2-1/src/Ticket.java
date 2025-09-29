@@ -44,15 +44,18 @@ public class Ticket {
         this.updateDate = new Date();
     }
 
+
     @Override
     public String toString() {
+        //refactorate
         // Chercher le nom du créateur
         String creatorName = Main.users.stream()
                 .filter(u -> u.getUserID() == creatorID)
                 .map(User::getName)
                 .findFirst()
                 .orElse("inconnu");
-
+        
+        //refactorate
         // Chercher le nom de l’admin assigné
         String adminName = (assignedAdminID != 0)
                 ? Main.admins.stream()
@@ -73,9 +76,6 @@ public class Ticket {
                 "\nDernière mise à jour : " + updateDate;
     }
 
-    // Getters
     public int getTicketID() { return ticketID; }
-    public int getCreatorID() { return creatorID; }
-    public int getAssignedAdminID() { return assignedAdminID; }
-    public String getStatus() { return status; }
+
 }

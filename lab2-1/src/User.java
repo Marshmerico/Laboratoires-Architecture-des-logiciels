@@ -16,9 +16,7 @@ public class User {
         this.ticketsID = new ArrayList<Integer>();
     }
 
-    public void createTicket(Ticket ticket) {
-        Main.tickets.add(ticket);
-    }
+    // SUPPRIMER la méthode createTicket() - maintenant gérée par le contrôleur
 
     public int getUserID() { return userID; }
     public String getName() { return name; }

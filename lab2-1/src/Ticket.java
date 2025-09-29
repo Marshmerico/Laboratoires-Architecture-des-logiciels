@@ -8,9 +8,8 @@ public class Ticket {
     private String priority;
     private Date creationDate;
     private Date updateDate;
-
-    private int creatorID;        // ID du User qui a créé le ticket
-    private int assignedAdminID;  // ID de l’Admin assigné (0 = aucun)
+    private int creatorID;
+    private int assignedAdminID;
 
     public Ticket(int ticketID, String title, String description, String status, String priority, int creatorID) {
         this.ticketID = ticketID;
@@ -21,7 +20,7 @@ public class Ticket {
         this.creationDate = new Date();
         this.updateDate = new Date();
         this.creatorID = creatorID;
-        this.assignedAdminID = 0; // pas encore assigné
+        this.assignedAdminID = 0;
     }
 
     public void assignTo(int adminID) {
@@ -44,19 +43,20 @@ public class Ticket {
         this.updateDate = new Date();
     }
 
+    // AJOUT des getters pour le contrôleur
+    public String getStatus() { return status; }
+    public int getCreatorID() { return creatorID; }
+    public int getAssignedAdminID() { return assignedAdminID; }
 
     @Override
     public String toString() {
-        //refactorate
-        // Chercher le nom du créateur
+        // (Le code reste identique)
         String creatorName = Main.users.stream()
                 .filter(u -> u.getUserID() == creatorID)
                 .map(User::getName)
                 .findFirst()
                 .orElse("inconnu");
-        
-        //refactorate
-        // Chercher le nom de l’admin assigné
+
         String adminName = (assignedAdminID != 0)
                 ? Main.admins.stream()
                 .filter(a -> a.getAdminID() == assignedAdminID)
@@ -77,5 +77,4 @@ public class Ticket {
     }
 
     public int getTicketID() { return ticketID; }
-
 }

@@ -14,15 +14,7 @@ public class Admin {
         this.ticketsID = new ArrayList<Integer>();
     }
 
-    public void assignTicket(Ticket ticket, Admin admin) {
-        ticket.assignTo(admin.getAdminID());
-        admin.addTicketID(ticket.getTicketID());
-
-    }
-
-    public void closeTicket(Ticket ticket) {
-        ticket.updateStatus("TERMINE");
-    }
+    // SUPPRIMER assignTicket() et closeTicket() - maintenant gérés par le contrôleur
 
     public int getAdminID() { return adminID; }
     public String getName() { return name; }

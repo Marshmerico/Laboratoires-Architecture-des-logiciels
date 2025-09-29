@@ -33,9 +33,32 @@ public class Ticket {
         }
     }
 
-    public void updateStatus(String status) {
-        this.status = status;
-        this.updateDate = new Date();
+    private boolean isStatusUpdateLegal(String status){
+        switch (this.status){
+            case "OUVERT" -> {
+                return "ASSIGNE".equalsIgnoreCase(status);
+            }
+            case "ASSIGNE" -> {
+                return "VALIDATION".equalsIgnoreCase(status);
+            }
+            case "VALIDATION" -> {
+                return "TERMINE".equalsIgnoreCase(status);
+            }
+            case "TERMINE" -> {
+                return false;
+            }
+        }
+        return false;
+    }
+
+    public boolean updateStatus(String status) {
+        if (isStatusUpdateLegal(status)) {
+            this.status = status;
+            this.updateDate = new Date();
+
+            return true;
+        }
+        return false;
     }
 
     public void addComment(String comment, int userID) {
@@ -50,7 +73,6 @@ public class Ticket {
 
     @Override
     public String toString() {
-        // (Le code reste identique)
         String creatorName = Main.users.stream()
                 .filter(u -> u.getUserID() == creatorID)
                 .map(User::getName)

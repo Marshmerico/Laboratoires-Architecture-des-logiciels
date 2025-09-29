@@ -1,0 +1,110 @@
+classDiagram
+    class Main {
+        -Scanner scanner
+        -List~User~ users
+        -List~Admin~ admins
+        -List~Ticket~ tickets
+        -int ticketCounter
+        -TicketController ticketController
+        +main(String[] args) void
+        -initializeData() void
+        -loginUser() Optional~User~
+        -loginAdmin() Optional~Admin~
+        -userMenu(User user) void
+        -adminMenu(Admin admin) void
+    }
+
+    class TicketController {
+        -List~User~ users
+        -List~Admin~ admins
+        -List~Ticket~ tickets
+        -int ticketCounter
+        +TicketController(users, admins, tickets, ticketCounter)
+        +createTicket(title, description, priority, creatorID) Ticket
+        +assignTicket(ticketID, adminID) boolean
+        +updateTicketStatus(ticketID, newStatus) boolean
+        +closeTicket(ticketID) boolean
+        +addCommentToTicket(ticketID, comment, userID) boolean
+        +findTicket(ticketID) Optional~Ticket~
+        +getUserByID(userID) Optional~User~
+        +findAdmin(adminID) Optional~Admin~
+        +loginUser(email) Optional~User~
+        +loginAdmin(email) Optional~Admin~
+        +getUserTickets(userID) List~Ticket~
+        +getAdminAssignedTickets(adminID) List~Ticket~
+        +getAllTickets() List~Ticket~
+        +getTicketCounter() int
+    }
+
+    class User {
+        -int userID
+        -String name
+        -String email
+        -String role
+        -List~Integer~ ticketsID
+        +User(userID, name, email, role)
+        +getUserID() int
+        +getName() String
+        +getEmail() String
+        +getRole() String
+        +getTicketsID() List~Integer~
+        +addTicketID(id) void
+    }
+
+    class Admin {
+        -int adminID
+        -String name
+        -String email
+        -List~Integer~ ticketsID
+        +Admin(adminID, name, email)
+        +getAdminID() int
+        +getName() String
+        +getEmail() String
+        +getTicketsID() List~Integer~
+        +addTicketID(id) void
+    }
+
+    class Ticket {
+        -int ticketID
+        -String title
+        -String description
+        -String status
+        -String priority
+        -Date creationDate
+        -Date updateDate
+        -int creatorID
+        -int assignedAdminID
+        +Ticket(ticketID, title, description, status, priority, creatorID)
+        +assignTo(adminID) void
+        +updateStatus(status) void
+        +addComment(comment, userID) void
+        +getTicketID() int
+        +getStatus() String
+        +getCreatorID() int
+        +getAssignedAdminID() int
+        +toString() String
+    }
+
+    class Scanner {
+        <<external>>
+    }
+
+    class Date {
+        <<external>>
+    }
+
+    %% RELATIONS
+    Main --> TicketController : utilise
+    Main --> User : contient
+    Main --> Admin : contient
+    Main --> Ticket : contient
+    
+    TicketController --> User : gère
+    TicketController --> Admin : gère
+    TicketController --> Ticket : gère
+    
+    User "1" --> "0..*" Ticket : crée
+    Admin "1" --> "0..*" Ticket : assigné
+    
+    Main ..> Scanner : dépendance
+    Ticket ..> Date : dépendance

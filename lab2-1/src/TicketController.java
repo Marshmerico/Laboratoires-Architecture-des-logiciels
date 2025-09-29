@@ -19,7 +19,6 @@ public class TicketController {
         Ticket ticket = new Ticket(ticketCounter++, title, description, "OUVERT", priority, creatorID);
         tickets.add(ticket);
 
-        // Lier le ticket à l'utilisateur créateur
         getUserByID(creatorID).ifPresent(user -> user.addTicketID(ticket.getTicketID()));
 
         return ticket;
@@ -42,10 +41,10 @@ public class TicketController {
     public boolean updateTicketStatus(int ticketID, String newStatus) {
         Optional<Ticket> ticket = findTicket(ticketID);
         if (ticket.isPresent()) {
-            ticket.get().updateStatus(newStatus);
-            return true;
+            return ticket.get().updateStatus(newStatus);
+            //return true;
         }
-        return false;
+        //return false;
     }
 
     public boolean closeTicket(int ticketID) {

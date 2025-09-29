@@ -14,8 +14,6 @@ public class Admin {
         this.ticketsID = new ArrayList<Integer>();
     }
 
-    // SUPPRIMER assignTicket() et closeTicket() - maintenant gérés par le contrôleur
-
     public int getAdminID() { return adminID; }
     public String getName() { return name; }
     public String getEmail() { return email; }

@@ -1,9 +1,12 @@
 import java.util.*;
+import java.io.File;
+
 
 public class Ticket {
     private int ticketID;
     private String title;
     private String description;
+     private String fichdescription;
     private String status;
     private String priority;
     private Date creationDate;
@@ -12,10 +15,11 @@ public class Ticket {
     private int creatorID;        // ID du User qui a créé le ticket
     private int assignedAdminID;  // ID de l’Admin assigné (0 = aucun)
 
-    public Ticket(int ticketID, String title, String description, String status, String priority, int creatorID) {
+    public Ticket(int ticketID, String title, String description, File fichdescription String status, String priority, int creatorID) {
         this.ticketID = ticketID;
         this.title = title;
         this.description = description;
+        this.fichdescription = fichdescription;
         this.status = status;
         this.priority = priority;
         this.creationDate = new Date();
@@ -30,7 +34,7 @@ public class Ticket {
             this.status = "ASSIGNE";
             this.updateDate = new Date();
         } else {
-            System.out.println("⚠️ Le ticket doit être OUVERT pour être assigné.");
+            System.out.println("Le ticket doit être OUVERT pour être assigné.");
         }
     }
 
@@ -39,9 +43,10 @@ public class Ticket {
         this.updateDate = new Date();
     }
 
-    public void addComment(String comment, int userID) {
+    public void addComment(String comment, int userID, File fichdescription) {
         this.description = this.description + " [Commentaire user#" + userID + " : " + comment + "]";
         this.updateDate = new Date();
+        this.fichdescription = this.fichdescription + fichdescription;
     }
 
     @Override

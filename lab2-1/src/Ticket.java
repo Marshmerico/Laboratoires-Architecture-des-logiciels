@@ -46,7 +46,7 @@ public class Ticket {
     public void addComment(String comment, int userID, File fichdescription) {
         this.description = this.description + " [Commentaire user#" + userID + " : " + comment + "]";
         this.updateDate = new Date();
-        this.fichdescription = this.fichdescription + fichdescription;
+        this.fichdescription = this.fichdescription + " " + fichdescription;
     }
 
     @Override

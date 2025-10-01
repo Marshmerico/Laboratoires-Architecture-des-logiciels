@@ -6,7 +6,7 @@ public class Ticket {
     private int ticketID;
     private String title;
     private String description;
-     private String fichdescription;
+    private File fichdescription;
     private String status;
     private String priority;
     private Date creationDate;

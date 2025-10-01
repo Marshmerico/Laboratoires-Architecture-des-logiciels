@@ -1,3 +1,4 @@
+import java.io.File;
 import java.util.*;
 
 public class TicketController {
@@ -12,7 +13,7 @@ public class TicketController {
     // ================= MÉTHODES DE GESTION DES TICKETS =================
 
     public void createTicket(String title, String description, String priority, int creatorID) {
-        Ticket ticket = new Ticket(ticketCounter++, title, description, "OUVERT", priority, creatorID);
+        Ticket ticket = new Ticket(ticketCounter++, title, description, null,"OUVERT", priority, creatorID);
         tickets.add(ticket);
 
         Main.getUserByID(creatorID).ifPresent(user -> user.addTicketID(ticket.getTicketID()));
@@ -47,13 +48,13 @@ public class TicketController {
         return updateTicketStatus(ticketID, "TERMINE");
     }
 
-    public boolean addCommentToTicket(int ticketID, String comment, int userID) {
+    public boolean addCommentToTicket(int ticketID, String comment, File fichdescription, int userID) {
         Optional<Ticket> ticket = findTicket(ticketID);
         Optional<User> user = Main.getUserByID(userID);
 
         if (ticket.isPresent() && user.isPresent() &&
                 user.get().getTicketsID().contains(ticketID)) {
-            ticket.get().addComment(comment, userID);
+            ticket.get().addComment(comment, userID, fichdescription);
             return true;
         }
         return false;

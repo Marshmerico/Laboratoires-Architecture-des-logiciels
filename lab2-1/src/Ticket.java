@@ -1,9 +1,11 @@
+import java.io.File;
 import java.util.*;
 
 public class Ticket {
     private int ticketID;
     private String title;
     private String description;
+    private File fichdescription;
     private String status;
     private String priority;
     private Date creationDate;
@@ -11,10 +13,11 @@ public class Ticket {
     private int creatorID;
     private int assignedAdminID;
 
-    public Ticket(int ticketID, String title, String description, String status, String priority, int creatorID) {
+    public Ticket(int ticketID, String title, String description, File fichdescription, String status, String priority, int creatorID) {
         this.ticketID = ticketID;
         this.title = title;
         this.description = description;
+        this.fichdescription = fichdescription;
         this.status = status;
         this.priority = priority;
         this.creationDate = new Date();
@@ -61,9 +64,10 @@ public class Ticket {
         return false;
     }
 
-    public void addComment(String comment, int userID) {
+    public void addComment(String comment, int userID, File fichdescription) {
         this.description = this.description + " [Commentaire user#" + userID + " : " + comment + "]";
         this.updateDate = new Date();
+        this.fichdescription = fichdescription;
     }
 
     // AJOUT des getters pour le contrôleur
@@ -87,9 +91,12 @@ public class Ticket {
                 .orElse("inconnu")
                 : "aucun";
 
+        String txtFichier = (Objects.nonNull(fichdescription)) ? fichdescription.getName() : "";
+
         return "\nID : " + ticketID +
                 "\nTitre : " + title +
                 "\nDescription : " + description +
+                "\nFichier : " + txtFichier +
                 "\nStatut : " + status +
                 "\nPriorité : " + priority +
                 "\nCréé par : " + creatorName +

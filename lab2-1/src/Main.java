@@ -1,3 +1,6 @@
+import java.io.File;
+import java.net.URI;
+import java.net.URL;
 import java.util.*;
 
 public class Main {
@@ -136,7 +139,30 @@ public class Main {
                     System.out.print("Commentaire : ");
                     String commentaire = scanner.nextLine();
 
-                    boolean success = ticketController.addCommentToTicket(id, commentaire, user.getUserID());
+                    System.out.print("Voulez-vous ajouter un fichier? O/N: ");
+                    String decisionFichier = scanner.nextLine();
+                    File fichDescription = null;
+                    if(decisionFichier.compareToIgnoreCase("O") == 0){
+                        System.out.print("Fichier : ");
+                        String fichier = "";
+                        fichier = scanner.nextLine();
+
+                        try{
+
+                            URL url = new URL("file:///" + fichier);
+                            URI uri = url.toURI();
+                            fichDescription = new File(uri);
+
+                        }
+                        catch (Exception e){
+                            e.printStackTrace();
+                            System.out.println("Le fichier n'existe pas");
+                        }
+
+                    }
+
+
+                    boolean success = ticketController.addCommentToTicket(id, commentaire, fichDescription, user.getUserID());
                     if (success) {
                         System.out.println("Commentaire ajouté avec succès.");
                     } else {

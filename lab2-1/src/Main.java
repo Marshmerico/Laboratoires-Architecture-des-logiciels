@@ -4,7 +4,6 @@ public class Main {
     static Scanner scanner = new Scanner(System.in);
     static List<User> users = new ArrayList<>();
     static List<Admin> admins = new ArrayList<>();
-    static List<Ticket> tickets = new ArrayList<>();
     static int ticketCounter = 1;
     static TicketController ticketController;
 
@@ -13,7 +12,7 @@ public class Main {
         initializeData();
 
         // Création du contrôleur
-        ticketController = new TicketController(users, admins, tickets, ticketCounter);
+        ticketController = new TicketController(ticketCounter);
 
         System.out.println("===== Système de Gestion de Tickets =====");
 
@@ -56,12 +55,27 @@ public class Main {
         admins.add(new Admin(2, "Admin2", "admin2@mail.com"));
     }
 
+    public static Optional<User> getUserByID(int userID) {
+        return users.stream()
+                .filter(u -> u.getUserID() == userID)
+                .findFirst();
+    }
+
+    public static Optional<Admin> findAdmin(int adminID) {
+        return admins.stream()
+                .filter(a -> a.getAdminID() == adminID)
+                .findFirst();
+    }
+
     // ================= CONNEXION UTILISATEUR =================
     private static Optional<User> loginUser() {
         System.out.print("Entrez votre email utilisateur : ");
         String email = scanner.nextLine();
 
-        Optional<User> user = ticketController.loginUser(email);
+        Optional<User> user = users.stream()
+                .filter(u -> u.getEmail().equalsIgnoreCase(email))
+                .findFirst();
+
         if (user.isPresent()) {
             System.out.println("Bienvenue " + user.get().getName() + " !");
         } else {
@@ -75,7 +89,10 @@ public class Main {
         System.out.print("Entrez votre email administrateur : ");
         String email = scanner.nextLine();
 
-        Optional<Admin> admin = ticketController.loginAdmin(email);
+        Optional<Admin> admin = admins.stream()
+                .filter(a -> a.getEmail().equalsIgnoreCase(email))
+                .findFirst();
+
         if (admin.isPresent()) {
             System.out.println("Bienvenue " + admin.get().getName() + " !");
         } else {
@@ -104,16 +121,13 @@ public class Main {
                     System.out.print("Priorité (Haute/Moyenne/Basse) : ");
                     String priorite = scanner.nextLine();
 
-                    Ticket ticket = ticketController.createTicket(titre, desc, priorite, user.getUserID());
-                    System.out.println("Ticket créé avec ID " + ticket.getTicketID());
+                    ticketController.createTicket(titre, desc, priorite, user.getUserID());
+
                 }
                 case 2 -> {
-                    List<Ticket> userTickets = ticketController.getUserTickets(user.getUserID());
-                    if (userTickets.isEmpty()) {
-                        System.out.println("Aucun ticket trouvé.");
-                    } else {
-                        userTickets.forEach(System.out::println);
-                    }
+
+                    ticketController.getUserTickets(user.getUserID());
+
                 }
                 case 3 -> {
                     System.out.print("ID du ticket : ");
@@ -150,12 +164,8 @@ public class Main {
 
             switch (choix) {
                 case 1 -> {
-                    List<Ticket> allTickets = ticketController.getAllTickets();
-                    if (allTickets.isEmpty()) {
-                        System.out.println("Aucun ticket dans le système.");
-                    } else {
-                        allTickets.forEach(System.out::println);
-                    }
+                    ticketController.getAllTickets();
+
                 }
                 case 2 -> {
                     System.out.print("ID du ticket à assigner : ");
@@ -199,12 +209,8 @@ public class Main {
                     }
                 }
                 case 5 -> {
-                    List<Ticket> assignedTickets = ticketController.getAdminAssignedTickets(admin.getAdminID());
-                    if (assignedTickets.isEmpty()) {
-                        System.out.println("Aucun ticket assigné.");
-                    } else {
-                        assignedTickets.forEach(System.out::println);
-                    }
+                    ticketController.getAdminAssignedTickets(admin.getAdminID());
+
                 }
                 case 6 -> { return; }
                 default -> System.out.println("Choix invalide.");

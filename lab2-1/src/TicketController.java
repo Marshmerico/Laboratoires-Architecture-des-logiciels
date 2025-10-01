@@ -1,32 +1,28 @@
 import java.util.*;
 
 public class TicketController {
-    private List<User> users;
-    private List<Admin> admins;
     private List<Ticket> tickets;
     private int ticketCounter;
 
-    public TicketController(List<User> users, List<Admin> admins, List<Ticket> tickets, int ticketCounter) {
-        this.users = users;
-        this.admins = admins;
-        this.tickets = tickets;
+    public TicketController(int ticketCounter) {
+        this.tickets = new ArrayList<>();
         this.ticketCounter = ticketCounter;
     }
 
     // ================= MÉTHODES DE GESTION DES TICKETS =================
 
-    public Ticket createTicket(String title, String description, String priority, int creatorID) {
+    public void createTicket(String title, String description, String priority, int creatorID) {
         Ticket ticket = new Ticket(ticketCounter++, title, description, "OUVERT", priority, creatorID);
         tickets.add(ticket);
 
-        getUserByID(creatorID).ifPresent(user -> user.addTicketID(ticket.getTicketID()));
+        Main.getUserByID(creatorID).ifPresent(user -> user.addTicketID(ticket.getTicketID()));
+        System.out.println("Ticket créé avec ID " + ticket.getTicketID());
 
-        return ticket;
     }
 
     public boolean assignTicket(int ticketID, int adminID) {
         Optional<Ticket> ticket = findTicket(ticketID);
-        Optional<Admin> admin = findAdmin(adminID);
+        Optional<Admin> admin = Main.findAdmin(adminID);
 
         if (ticket.isPresent() && admin.isPresent()) {
             if ("OUVERT".equalsIgnoreCase(ticket.get().getStatus())) {
@@ -44,7 +40,7 @@ public class TicketController {
             return ticket.get().updateStatus(newStatus);
             //return true;
         }
-        //return false;
+        return false;
     }
 
     public boolean closeTicket(int ticketID) {
@@ -53,7 +49,7 @@ public class TicketController {
 
     public boolean addCommentToTicket(int ticketID, String comment, int userID) {
         Optional<Ticket> ticket = findTicket(ticketID);
-        Optional<User> user = getUserByID(userID);
+        Optional<User> user = Main.getUserByID(userID);
 
         if (ticket.isPresent() && user.isPresent() &&
                 user.get().getTicketsID().contains(ticketID)) {
@@ -71,46 +67,38 @@ public class TicketController {
                 .findFirst();
     }
 
-    public Optional<User> getUserByID(int userID) {
-        return users.stream()
-                .filter(u -> u.getUserID() == userID)
-                .findFirst();
-    }
-
-    public Optional<Admin> findAdmin(int adminID) {
-        return admins.stream()
-                .filter(a -> a.getAdminID() == adminID)
-                .findFirst();
-    }
-
-    public Optional<User> loginUser(String email) {
-        return users.stream()
-                .filter(u -> u.getEmail().equalsIgnoreCase(email))
-                .findFirst();
-    }
-
-    public Optional<Admin> loginAdmin(String email) {
-        return admins.stream()
-                .filter(a -> a.getEmail().equalsIgnoreCase(email))
-                .findFirst();
-    }
-
     // ================= MÉTHODES DE RAPPORT =================
 
-    public List<Ticket> getUserTickets(int userID) {
-        return tickets.stream()
+    public void getUserTickets(int userID) {
+        List<Ticket> userTickets = tickets.stream()
                 .filter(t -> t.getCreatorID() == userID)
                 .toList();
+
+        if (userTickets.isEmpty()) {
+            System.out.println("Aucun ticket trouvé.");
+        } else {
+            userTickets.forEach(System.out::println);
+        }
     }
 
-    public List<Ticket> getAdminAssignedTickets(int adminID) {
-        return tickets.stream()
+    public void getAdminAssignedTickets(int adminID) {
+        List<Ticket> assignedTickets = tickets.stream()
                 .filter(t -> t.getAssignedAdminID() == adminID)
                 .toList();
+        if (assignedTickets.isEmpty()) {
+            System.out.println("Aucun ticket assigné.");
+        } else {
+            assignedTickets.forEach(System.out::println);
+        }
     }
 
-    public List<Ticket> getAllTickets() {
-        return new ArrayList<>(tickets);
+    public void getAllTickets() {
+
+        if (tickets.isEmpty()) {
+            System.out.println("Aucun ticket dans le système.");
+        } else {
+            tickets.forEach(System.out::println);
+        }
     }
 
     public int getTicketCounter() {

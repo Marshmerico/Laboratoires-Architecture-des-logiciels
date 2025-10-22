@@ -91,13 +91,38 @@ public class TicketInterface extends JFrame {
     private void creerTicket(User user) {
         String titre = JOptionPane.showInputDialog(this, "Titre du ticket :");
         String desc = JOptionPane.showInputDialog(this, "Description :");
-        String priorite = JOptionPane.showInputDialog(this, "Priorité (Haute/Moyenne/Basse) :");
 
-        if (titre != null && desc != null && priorite != null) {
-            ticketController.createTicket(titre, desc, priorite, user.getUserID());
-            JOptionPane.showMessageDialog(this, "Ticket créé avec succès !");
+        if (titre == null || desc == null) {
+            // L'utilisateur a annulé
+            return;
         }
+
+        String priorite = null;
+        boolean prioriteValide = false;
+
+        while (!prioriteValide) {
+            priorite = JOptionPane.showInputDialog(this, "Priorité (Haute/Moyenne/Basse) :");
+
+            if (priorite == null) {
+                // L'utilisateur a cliqué sur Annuler → on sort
+                return;
+            }
+
+            // Normalise la casse
+            priorite = priorite.trim().toLowerCase();
+
+            if (priorite.equals("haute") || priorite.equals("moyenne") || priorite.equals("basse")) {
+                prioriteValide = true;
+            } else {
+                JOptionPane.showMessageDialog(this, "Choix impossible. Entrez Haute, Moyenne ou Basse.");
+            }
+        }
+
+        // Création du ticket si tout est valide
+        ticketController.createTicket(titre, desc, priorite, user.getUserID());
+        JOptionPane.showMessageDialog(this, "Ticket créé avec succès !");
     }
+
 
     private void voirMesTickets(User user) {
         List<Ticket> tickets = ticketController.getUserTickets(user.getUserID());

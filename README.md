@@ -1,4 +1,6 @@
 ![UML](https://github.com/Marshmerico/Laboratoires-Architecture-des-logiciels/blob/main/UML.png)
+# Laboratoire 2
+------------------------------------------------------------------------------------------------------------------------
 # Section I
 ## Critique du diagramme de classe initial
 
@@ -64,3 +66,46 @@ La leçon principale est l'importance de **faire un excellent diagramme de class
 
 ### Bilan global
 Le laboratoire a renforcé notre capacité à **optimiser et traduire efficacement** des diagrammes de classe en programme fonctionnel.
+
+# Laboratoire 3
+------------------------------------------------------------------------------------------------------------------------
+# Partie 3
+
+## Section I — Critique du diagramme de classe initial
+
+Le diagramme UML initial ne contient pas **d'interface**, alors qu'il s'agit d'un élément essentiel dans un projet de cette envergure. 
+
+### Problématiques identifiées :
+- **Sans interface**, l'application devient difficile à utiliser pour les utilisateurs finaux
+- **Absence d'UI** dans la conception initiale
+- **Expérience utilisateur** compromise
+
+### Impacts positifs d'une interface :
+- **Meilleure expérience d'utilisation**
+- **Navigation facilitée** dans le système
+- **Adoption plus aisée** par les utilisateurs finaux
+
+---
+
+## Section II — Améliorations apportées au diagramme et justifications
+
+| Modification | Justification |
+| :--- | :--- |
+| **Ajout de mesures de contrôle** | Ces mesures permettent d'assurer une **meilleure gestion des erreurs** et d'éviter des comportements inattendus dans l'application. Elles renforcent la **fiabilité** et la **robustesse** du système. |
+
+---
+
+## Section III — Autres améliorations apportées au code et à la conception
+
+### Validation des données
+- **Des limites ont été ajoutées** afin d'empêcher l'application de types de priorité inexistants aux tickets
+- **Contrôle des entrées utilisateur**
+- **Prévention des données invalides**
+
+### Développement de l'interface
+L'interface utilisateur a été développée avec les technologies suivantes :
+
+```java
+- Bibliothèque Swing
+- Composants AWT  
+- Basé sur JFrame
